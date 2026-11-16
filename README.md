@@ -1,6 +1,6 @@
 # Building a Second Mind
 
-**Making AI Tools Work Together** · Hashem Almubarak · SG Agentic Nights, Singapore · 24 November 2026
+**Making AI Tools Work Together** · Audience starter kit
 
 One small project, several tools, and saved context you can inspect. Start with a Markdown decision, build a signup page with Claude Code, revise it with Codex, then optionally ask about it through OpenClaw and Telegram.
 
@@ -62,8 +62,6 @@ Import this repository into Vercel. Use the **Other** framework preset; output d
 
 Product features and authentication flows change. Follow current official documentation for setup. This is an independent educational demo; no product sponsorship is implied.
 
-## Connect
+## License
 
-[Hashem on LinkedIn](https://www.linkedin.com/in/hashem-almubarak/) · [Portfolio](https://hashem-m-almubarak-portfolio.vercel.app/)
-
-Original code and starter notes: MIT. Portrait, product marks and generated media have separate terms; see [ASSETS.md](ASSETS.md).
+Original code and starter notes are available under the MIT license. Product names and marks belong to their respective owners.
