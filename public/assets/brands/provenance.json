@@ -1,0 +1,47 @@
+{
+  "retrieved_at": "2026-11-04",
+  "purpose": "Product identification in educational speaker presentation; no sponsorship implied",
+  "assets": [
+    {
+      "file": "obsidian.svg",
+      "asset_url": "https://obsidian.md/images/obsidian-logo-gradient.svg",
+      "source_page": "https://obsidian.md",
+      "note": "Official website logo",
+      "sha256": "119b01b96c99f736098742c329f440313b6763bd2aea22cafe08179699431280"
+    },
+    {
+      "file": "claude.svg",
+      "asset_url": "https://claude.com/icon.svg",
+      "source_page": "https://claude.com",
+      "note": "Official Claude site icon; label Claude Code alongside it, not a separate invented Claude Code brand",
+      "sha256": "b150888bc7257af83e3b85d3c2be4294f88986026f8168f6c12fc1fde6697350"
+    },
+    {
+      "file": "chatgpt.png",
+      "asset_url": "https://learn.chatgpt.com/favicon.png",
+      "source_page": "https://learn.chatgpt.com",
+      "note": "Official ChatGPT Learn site icon",
+      "sha256": "8d5575ee667ff715cd3e3074d5296edc68d5aadd89720d203e13131b68b22a04"
+    },
+    {
+      "file": "notion.svg",
+      "source_page": "https://www.notion.com",
+      "note": "Official inline SVG from homepage navigation, Notion Home link. Geometry unchanged. Standalone asset resolves original site CSS variable var(--notion-logo-fill, var(--tatami-color-black)) to official black #000000; original white fills retained.",
+      "sha256": "a8acd7fc32ea77659a6d00327b96f65fbb3142a8449eadb2542ee9148032b588"
+    },
+    {
+      "file": "chatgpt.svg",
+      "source_page": "https://learn.chatgpt.com",
+      "note": "Unchanged inline OpenAI Blossom SVG from the ChatGPT Learn navigation. Official product identification, not an invented logo. Prefer over 48px PNG for slide display.",
+      "sha256": "468ebe03b0504e3e40be53e6c1f4b5b80c00d94ea4ad07b913ae41073638ae90"
+    },
+    {
+      "file": "openclaw.svg",
+      "source_page": "https://openclaw.ai",
+      "asset_url": "https://openclaw.ai/brand/openclaw-mascot.svg",
+      "retrieved_at": "2026-11-07",
+      "note": "Unchanged official site mascot SVG for product identification",
+      "sha256": "87d87ee7bb4e6fb868bf5ac1a873fb3669dc5c14cdf71ec8ded97f1869a12ce3"
+    }
+  ]
+}

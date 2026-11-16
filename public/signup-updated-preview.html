@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team waitlist · Prepared revision</title>
+  <style>
+    * { box-sizing: border-box }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #f5f3eb; color: #24231f; font: 18px system-ui, sans-serif }
+    main { width: min(100%, 520px); padding: clamp(20px, 5vw, 48px); border-top: 3px solid #ac3926; background: #fffdf8 }
+    .kicker { color: #96321f; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase }
+    h1 { margin: 12px 0 8px; font-size: clamp(30px, 6vw, 54px); line-height: 1.08; letter-spacing: -.045em }
+    p { line-height: 1.5 }
+    form { display: grid; gap: 10px; margin-top: 24px }
+    label { font-weight: 650 }
+    input, button { padding: 12px; font: inherit; border: 1px solid #645f55; border-radius: 4px }
+    button { background: #24231f; color: white; cursor: pointer }
+    .hint, #confirmation { margin-bottom: 0; font-size: .9rem }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">Prepared revision</p>
+    <h1>Join the waitlist</h1>
+    <p>The saved plan now asks for a Notify me button.</p>
+    <form id="signup">
+      <label for="email">Email address</label>
+      <input id="email" type="email" required placeholder="demo@example.com">
+      <button type="submit">Notify me</button>
+    </form>
+    <p id="confirmation" role="status"></p>
+    <p class="hint">Demo form. Submissions stay on this page.</p>
+  </main>
+  <script>
+    const form = document.querySelector('#signup');
+    const confirmation = document.querySelector('#confirmation');
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      confirmation.textContent = 'Thanks for trying the signup demo.';
+    });
+    form.addEventListener('input', () => {
+      confirmation.textContent = '';
+    });
+  </script>
+</body>
+</html>

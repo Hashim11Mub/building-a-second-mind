@@ -1,0 +1,353 @@
+/* Stage visuals: one large coded illustration per demo slide, plus the cursor layer.
+   Loaded last. Colours come from the existing deck variables (cream, near-black, rust). */
+/* One frame for every stage slide, whatever older per-scene rules say. */
+#scene[data-scene]:has(.sv){height:100%;min-height:0;padding:24px 5vw;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.sv,.sv-host{position:relative}
+.sv,.sv-host,.sv-cartoon{--t:clamp(15px,1.5vw,21px);--s:clamp(10px,.85vw,12px);--card:#fffdf8}
+.simple-deck.sv{justify-content:flex-start;gap:clamp(10px,2vh,18px)}
+.simple-deck.sv .story-head .kicker{margin-bottom:8px}
+.simple-deck.sv .story-head h2{font-size:clamp(28px,min(4.3vw,8.2vh),62px)}
+.sv small,.sv-cartoon small{display:block;font:var(--s)/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mint)}
+.sv-stage{flex:1;min-height:0;display:grid;gap:clamp(12px,1.6vw,24px);align-items:stretch}
+.sv-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:10px}
+.sv-foot>p{margin:0;font-size:clamp(13px,1.25vw,18px);color:var(--muted)}
+.sv-foot .button-row{margin:0;gap:16px;align-items:center;flex-wrap:nowrap}
+.sv-foot .button{padding:10px 16px;font-size:13px;white-space:nowrap}
+.sv-foot .text-button{white-space:nowrap}
+
+/* cursor layer and build steps */
+.sv-layer{position:absolute;inset:0;pointer-events:none;z-index:30}
+.sv-cursor{opacity:0;transition:transform .4s cubic-bezier(.3,.7,.2,1),opacity .22s}
+.sv-cursor.on{opacity:1}
+.sv-cursor svg{transition:scale .12s}.sv-cursor.press svg{scale:.8}
+.sv-cursor i{font-size:11px;padding:4px 7px;opacity:1}
+.sv-box{transition:width .36s cubic-bezier(.3,.7,.2,1),height .36s cubic-bezier(.3,.7,.2,1),opacity .25s;border-width:2px;border-radius:3px}
+.sv-box .build-size{font-size:11px;padding:3px 6px}
+[data-step]{transition:opacity .3s,translate .35s cubic-bezier(.2,.7,.2,1)}
+.sv-pre [data-step]:not(.on){opacity:0}
+.sv-pre [data-step]:not(.on):not(.sv-file):not(img){translate:0 8px}
+.sv-cursor.flip i{position:absolute;right:calc(100% - 6px);top:0;white-space:nowrap}
+.sv-rest{visibility:hidden}
+.sv-typed::after{content:'';display:inline-block;width:2px;height:1em;margin-left:1px;vertical-align:-.12em;background:var(--mint)}
+.sv-marked{background:color-mix(in srgb,var(--mint) 13%,transparent);box-shadow:0 0 0 4px color-mix(in srgb,var(--mint) 13%,transparent);border-radius:3px}
+.sv-drag{box-shadow:0 14px 26px -10px #20201d70;z-index:5}
+
+/* shared pieces: file chips, windows, documents */
+.sv-file{display:inline-flex;align-items:center;gap:9px;padding:9px 13px 9px 9px;background:var(--card);border:1px solid var(--line);border-radius:8px;font:clamp(13px,1.25vw,18px) var(--mono);white-space:nowrap;position:relative}
+.sv-file>b{font:700 9px var(--mono);padding:5px 4px;border-radius:4px;background:var(--paper);color:var(--bg);letter-spacing:.04em}
+.sv-file[data-kind=made]>b{background:var(--mint)}
+.sv-file[data-kind=planned]{border-style:dashed;background:transparent;color:var(--muted)}
+.sv-file[data-kind=planned]>b{background:var(--muted)}
+.sv-file>i{font:normal var(--s) var(--mono);color:var(--muted);margin-left:4px}
+.sv-file.sv-marked{background:var(--card);box-shadow:none}
+.sv-pre .sv-file.sv-marked{box-shadow:0 0 0 3px color-mix(in srgb,var(--mint) 35%,transparent);background:var(--card);border-radius:8px}
+.sv-chips{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.sv-win,.sv-doc,.sv-term{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 18px 44px -26px #20201d66}
+.sv-bar,.sv-doc>header{display:flex;align-items:center;gap:6px;padding:9px 13px;border-bottom:1px solid var(--line);background:var(--panel);font:clamp(11px,1vw,14px) var(--mono);color:var(--muted)}
+.sv-bar>i{width:9px;height:9px;border-radius:50%;background:#20201d2b}
+.sv-bar>span{margin-left:8px;display:flex;align-items:center;gap:7px}.sv-bar img{width:16px;height:16px}
+.sv-body{flex:1;min-height:0;display:flex}
+.sv-doc>header{gap:9px;color:var(--paper)}
+.sv-doc>header>b{font:700 9px var(--mono);padding:5px 4px;border-radius:4px;background:var(--paper);color:var(--bg)}
+.sv-doc>header>em{margin-left:auto;font-style:normal;color:var(--muted);font-size:.85em}
+.sv-doc>div{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.2vh,12px);padding:clamp(14px,2vw,26px)}
+.sv-doc p{margin:0;font-size:var(--t);line-height:1.45}
+.sv-doc small:not(:first-child){margin-top:clamp(6px,1.4vh,14px)}
+.sv-arrow{align-self:center;font-size:clamp(24px,3vw,44px);font-weight:400;color:var(--mint)}
+.sv-stamp{position:absolute;top:0;right:0;z-index:2;padding:6px 11px;border:2px solid var(--mint);border-radius:4px;color:var(--mint);font:700 clamp(10px,.95vw,13px) var(--mono);letter-spacing:.08em;text-transform:uppercase;rotate:-2deg;background:var(--bg)}
+.sv-link{display:block;height:3px;background:var(--mint);transform-origin:left;transition:transform .48s cubic-bezier(.3,.7,.2,1)}
+.sv-pre .sv-link:not(.on){transform:scaleX(0)}
+
+/* slide 4 · one folder, two views */
+.sv-folder{grid-template-columns:1.35fr auto 1fr}
+.sv-tree{flex:0 0 34%;display:flex;flex-direction:column;gap:6px;padding:14px 10px;border-right:1px solid var(--line);background:#f3f0e8}
+.sv-tree small{margin:0 6px 6px}
+.sv-row{padding:7px 8px;border-radius:5px;font:clamp(12px,1.1vw,16px) var(--mono);overflow-wrap:anywhere}
+.sv:not(.sv-pre) #ob-plan,#ob-plan.on{background:var(--paper);color:var(--bg)}
+.sv-note{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.3vh,12px);padding:clamp(14px,2vw,26px)}
+.sv-note h3{margin:0 0 6px;font-size:clamp(22px,2.5vw,36px);letter-spacing:-.04em;line-height:1.1}
+.sv-note p{margin:0;font-size:var(--t);line-height:1.4}
+.sv-note mark,.sv-doc ins{background:color-mix(in srgb,var(--mint) 15%,transparent);color:var(--mint);font-weight:650;padding:0 4px;border-radius:3px;text-decoration:none}
+.sv-same{align-self:center;display:grid;justify-items:center;gap:4px;font:var(--s)/1.3 var(--mono);text-align:center;color:var(--mint);text-transform:uppercase;letter-spacing:.08em}
+.sv-same b{font-size:clamp(26px,3vw,44px);line-height:1}
+.sv-finder .sv-body{flex-direction:column}
+.sv-icons{flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:12px;padding:16px}
+.sv-icon{display:grid;justify-items:center;gap:10px;padding:8px;font:clamp(11px,1.05vw,15px) var(--mono);text-align:center;border-radius:6px}
+.sv-icon>b{display:grid;place-items:center;width:clamp(46px,5vw,70px);aspect-ratio:4/5;border:2px solid var(--paper);border-radius:6px 16px 6px 6px;background:var(--bg);font:700 clamp(11px,1.1vw,15px) var(--mono)}
+.sv-path{display:grid;gap:4px;padding:12px 14px;background:var(--paper);color:var(--bg)}
+.sv-path code{font:clamp(13px,1.25vw,18px) var(--mono)}
+.sv-path>span{font-size:clamp(11px,1vw,14px);color:#cfcabd}
+
+/* slide 5 · each tool has a job */
+.sv-tools{grid-template-rows:auto minmax(0,1fr)}
+.sv-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,24px)}
+.sv-tool{display:flex;align-items:center;gap:clamp(12px,1.4vw,20px);padding:clamp(12px,1.6vw,22px);background:var(--card);border:1px solid var(--line);border-radius:10px}
+.sv-tool img{width:clamp(44px,5vw,72px);height:clamp(44px,5vw,72px);object-fit:contain;flex:none}
+.sv-tool h3,.sv-nodes h3{margin:0;font-size:clamp(20px,2.3vw,34px);letter-spacing:-.04em;line-height:1.1}
+.sv-tool p{margin:5px 0 0;font-size:var(--t);color:var(--muted);line-height:1.3}
+.sv-tray{display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,2vh,18px);padding:clamp(14px,2vw,26px);border:2px dashed #20201d40;border-radius:14px}
+.sv-tray small{text-transform:none;letter-spacing:.02em;font-size:clamp(12px,1.1vw,15px)}
+.sv-tray .sv-chips{display:grid;grid-template-columns:repeat(5,auto);justify-content:space-between;align-items:start}
+.sv-tray .sv-file{flex-wrap:wrap;font-size:clamp(14px,1.5vw,22px);padding:12px 16px 12px 12px}
+.sv-tray .sv-file>i{flex-basis:100%;margin:2px 0 0;font-size:clamp(10px,.95vw,13px)}
+
+/* slide 6 · one clear requirement */
+.sv-req{grid-template-columns:1.15fr 1fr}
+.sv-checks{display:flex;flex-direction:column;justify-content:center;gap:0}
+.sv-checks small{margin-bottom:8px}
+.sv-checks>div{display:flex;align-items:center;gap:14px;padding:clamp(9px,1.7vh,16px) 0;border-bottom:1px solid var(--line);font-size:clamp(18px,2vw,29px);font-weight:650;letter-spacing:-.02em;line-height:1.2}
+.sv-checks i{flex:none;width:clamp(18px,1.9vw,26px);aspect-ratio:1;border:2px solid var(--paper);border-radius:4px}
+
+/* slides 7 and 8 · terminal, browser, the changed note */
+.sv-build{grid-template-columns:1.2fr 1fr}
+.sv-term{background:var(--paper);color:var(--bg);border-color:var(--paper)}
+.sv-term .sv-bar{background:#2b2b27;border-color:#ffffff1f;color:#b9b5a8}.sv-term .sv-bar>i{background:#ffffff33}
+.sv-term pre{flex:1;margin:0;padding:clamp(12px,1.6vw,22px);font:clamp(13px,1.25vw,18px)/1.6 var(--mono);white-space:pre-wrap;overflow:hidden}
+.sv-term pre>b{color:#e58a73}
+.sv-term pre>[data-step]{color:#d8d3c6}
+.sv-term>em{padding:0 clamp(12px,1.6vw,22px) 12px;font:normal var(--s) var(--mono);color:#a09c90}
+.sv-form{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.4vh,12px);padding:clamp(14px,2vw,28px);border-top:3px solid var(--mint)}
+.sv-form h3{margin:0 0 4px;font-size:clamp(22px,2.5vw,36px);letter-spacing:-.045em}
+.sv-form label{font-weight:650;font-size:var(--t)}
+.sv-input{min-height:2.6em;display:flex;align-items:center;padding:0 12px;border:1px solid #645f55;border-radius:4px;font-size:var(--t);background:#fff}
+.sv-placeholder{color:#a8a399}
+.sv-btn{padding:11px;border-radius:4px;background:var(--paper);color:#fff;text-align:center;font-size:var(--t);font-weight:600;align-self:stretch}
+.sv-btn.sv-marked{background:var(--paper);box-shadow:0 0 0 4px color-mix(in srgb,var(--mint) 40%,transparent)}
+.sv-flash{animation:sv-flash .5s}
+@keyframes sv-flash{from{background:var(--mint)}}
+.sv-ok{margin:2px 0 0;font-size:var(--t);font-weight:650;color:#2f7a66}
+.sv-kept{margin:6px 0 0;font-size:clamp(13px,1.2vw,17px);color:var(--muted)}
+.sv-change{grid-template-columns:1.25fr auto 1fr}
+.sv-doc del{color:var(--muted)}
+.sv-pre del:not(.on){text-decoration:none;color:inherit}
+.sv-rebuild{align-self:center;display:grid;justify-items:center;gap:10px;text-align:center;font-size:clamp(12px,1.1vw,16px);line-height:1.3;color:var(--muted)}
+.sv-rebuild b{display:grid;place-items:center;width:clamp(44px,4.6vw,64px);aspect-ratio:1;border:2px solid var(--mint);border-radius:50%;color:var(--mint);font-size:clamp(22px,2.4vw,34px);font-weight:400}
+.sv-rebuild.on b{animation:sv-spin .65s cubic-bezier(.4,0,.2,1)}
+@keyframes sv-spin{to{rotate:360deg}}
+
+/* slide 9 · continue from the files */
+.sv-cont{grid-template-columns:1fr auto 1.2fr}
+.sv-fresh{display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,2vh,18px);min-width:0}
+.sv-drop{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:clamp(12px,1.6vw,20px);border:2px dashed #20201d40;border-radius:14px}
+.sv-ask{margin:0;font-size:clamp(17px,1.9vw,28px);line-height:1.3;letter-spacing:-.02em}
+.sv-field{display:grid;grid-template-columns:clamp(70px,8vw,110px) 1fr;align-items:baseline;gap:10px;padding-bottom:clamp(6px,1.2vh,12px);border-bottom:1px solid var(--line)}
+.sv-doc .sv-field small{margin:0}
+.sv-field span{font-weight:650;font-size:clamp(16px,1.7vw,25px);letter-spacing:-.02em}
+
+/* slide 10 · OpenClaw and Telegram */
+.sv-pipe{grid-template-rows:minmax(0,1fr) auto}
+.sv-nodes{display:grid;grid-template-columns:1fr clamp(22px,3vw,48px) 1fr clamp(22px,3vw,48px) 1fr clamp(22px,3vw,48px) 1fr;align-items:center}
+.sv-nodes section{align-self:stretch;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:clamp(12px,1.5vw,22px);background:var(--card);border:1px solid var(--line);border-radius:10px;min-width:0}
+.sv-nodes svg,.sv-nodes img{width:clamp(36px,4vw,56px);height:clamp(36px,4vw,56px);color:var(--mint)}
+.sv-nodes h3{font-size:clamp(17px,1.9vw,28px);overflow-wrap:anywhere}
+.sv-nodes p{margin:0;font-size:clamp(13px,1.2vw,17px);line-height:1.35;color:var(--muted)}
+.sv-setup{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,24px)}
+.sv-setup li{display:flex;align-items:center;gap:10px;font-size:clamp(13px,1.25vw,18px);font-weight:600;line-height:1.25}
+.sv-setup li::before{content:'';flex:none;width:16px;height:16px;border:2px solid var(--paper);border-radius:4px}
+
+/* slide 11 · ask it to pick up the work */
+.sv-askgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,44px)}
+.sv-phone{display:flex;flex-direction:column;min-height:0;background:var(--card);border:2px solid var(--paper);border-radius:22px;overflow:hidden}
+.sv-phone header{display:flex;align-items:center;gap:9px;padding:10px 16px;border-bottom:1px solid var(--line);font-weight:650;font-size:clamp(14px,1.3vw,18px)}
+.sv-phone header img{width:24px;height:24px}
+.sv-phone header small{margin-left:auto}
+.sv-thread{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;padding:12px}
+.sv-bubble{display:flex;align-items:flex-end;gap:8px;background:var(--panel);border-radius:14px}
+.sv-bubble .chat-line{flex:1;margin:0;font-size:clamp(13px,1.22vw,17px);line-height:1.4}
+.sv-after{display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,3vh,28px);min-width:0}
+.sv-approved{display:grid;gap:10px}
+.sv-after .demo-answer{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:clamp(10px,2vh,18px)}
+.sv-after .demo-answer p{margin:0;font-size:clamp(16px,1.75vw,26px);font-weight:650;line-height:1.3;letter-spacing:-.02em}
+
+/* slide 1 · the cover rail */
+.sv-coverfoot{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.sv-coverfoot .cover-byline{flex:1}
+.sv-rail{display:flex;align-items:center;flex:none;padding-bottom:4px}
+.sv-rail img{width:clamp(30px,3.2vw,46px);height:clamp(30px,3.2vw,46px);object-fit:contain}
+.sv-rail .sv-link{width:clamp(18px,2.6vw,40px);margin:0 8px}
+
+/* slide 12 · recap */
+.sv-recap{display:flex;flex-wrap:wrap;gap:8px;margin:clamp(12px,2.4vh,22px) 0 0}
+.sv-recap span{padding:7px 12px;border:1px solid var(--paper);border-radius:99px;font:clamp(11px,1.05vw,14px) var(--mono);transition:opacity .25s,background .25s,color .25s}
+.sv-recap .planned{border-style:dashed;color:var(--muted)}
+.sv-recap span:not(.planned){background:var(--paper);color:var(--bg)}
+.sv-pre .sv-recap span:not(.on){opacity:.25;background:transparent;color:inherit}
+
+/* slide 3 · the 10-second cartoon layer */
+.sv-cartoon{position:absolute;inset:0;z-index:20;display:grid;grid-template-rows:minmax(0,1fr) auto auto;justify-items:center;gap:8px;padding:16px 5vw 12px;background:var(--bg)}
+.sv-cartoon[hidden]{display:none}
+.sv-cartoon figure{position:relative;margin:0;height:100%;aspect-ratio:1672/941;max-width:100%}
+.sv-cartoon figure img,.sv-cartoon video{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+#ct-note{position:absolute;left:36%;bottom:13%;rotate:-5deg;box-shadow:0 8px 18px -8px #20201d80}
+.sv-caption{margin:0;min-height:1.2em;font-size:clamp(22px,2.7vw,40px);font-weight:750;letter-spacing:-.035em;text-align:center;transition:opacity .2s}
+.sv-pre .sv-caption:not(.on){opacity:0}
+.sv-cartoon .button-row{margin:0;align-items:center;gap:18px}
+.sv-cartoon .button{padding:9px 15px;font-size:12px}
+.sv-cartoon small{color:var(--muted);letter-spacing:.04em;text-transform:none}
+
+@media(max-width:800px){
+  .sv-foot .text-button{display:none}
+  .sv-foot>p{font-size:11px}.sv-foot .button{font-size:11px;padding:8px 11px}
+  .sv-file>i{display:none}
+  .sv-setup{grid-template-columns:1fr 1fr;gap:6px 12px}
+  .sv-nodes p{display:none}
+  .sv-icon:nth-child(2){display:none}
+  .sv-tray .sv-chips{display:flex}
+  .sv-recap{display:none}
+}
+
+/* Slide 3 used a fixed bar height and overflowed by 8px on a 1080p projector. */
+body:has(.story-reset){height:100svh;overflow:hidden}
+body:has(.story-reset) #app{height:100svh;min-height:0}
+#scene[data-scene]:has(.story-reset){height:100%}
+
+/* Slide 3 with the generated clip: the note lands beside the sheet on the desk. */
+.sv-has-clip figure{aspect-ratio:854/480}
+.sv-has-clip #ct-note{left:27%;bottom:17%;rotate:-4deg}
+.sv-cartoon video{mix-blend-mode:normal;border-radius:6px;background:#f8f1e1}
+
+/* Slide 3 clip player: large frame, captions on the video clock, own play and replay buttons. */
+.sv-cartoon{padding:12px 3vw 10px;gap:6px}
+.sv-cartoon [hidden]{display:none}
+.sv-has-clip figure{border-radius:10px;overflow:hidden;box-shadow:0 18px 44px -26px #20201d66;border:1px solid var(--line)}
+.sv-cartoon video{border-radius:0}
+.sv-has-clip .sv-caption{opacity:1!important}
+.sv-has-clip:not(.clip-ended) #ct-note{visibility:hidden}
+.sv-cartoon .text-button{min-width:5.5em;text-align:center}
+/* slide 5 access lines, slide 11 access rule */
+.sv-tool small{margin-top:8px;letter-spacing:.06em}
+.sv-rule{margin:auto;padding:8px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line);font:clamp(11px,1vw,14px)/1.5 var(--mono);color:var(--muted);text-align:center}
+.speaker-question{margin:12px 0 0;font-size:.9em}
+.speaker-question strong{display:inline-block;margin-right:.45em;color:var(--mint);font-size:.82em;text-transform:uppercase}
+.speaker-question em{font-style:normal;font-weight:650}
+
+/* Review fixes: tray chips keep badge and name on one line; short laptop windows drop the recap. */
+.sv-tray .sv-file{display:inline-grid;grid-template-columns:auto auto;justify-content:start;column-gap:9px}
+.sv-tray .sv-file>i{grid-column:1/-1}
+@media(max-height:680px) and (max-width:1100px){.sv-recap{display:none}}
+@media(max-width:1100px){.sv-tray .sv-chips{display:flex;flex-wrap:wrap;gap:8px}.sv-tray .sv-file{font-size:13px;padding:8px 10px}.sv-tray{padding:12px;gap:8px}}
+
+/* Slide 1 opening: loose decisions exist only while the opening plays; the finished cover stays clean. */
+.sv-ideas{position:absolute;inset:0;pointer-events:none}
+.sv-ideas span{position:absolute;opacity:0;padding:9px 16px;border:1px solid var(--line);border-radius:99px;background:var(--card);font:clamp(12px,1.25vw,18px) var(--mono);white-space:nowrap;box-shadow:0 10px 24px -16px #20201d80;transition:opacity .3s}
+.sv-pre .sv-ideas span{opacity:1}
+.sv-ideas span:nth-child(1){left:58%;top:12%;rotate:-3deg}
+.sv-ideas span:nth-child(2){left:74%;top:24%;rotate:2deg}
+.sv-ideas span:nth-child(3){left:60%;top:35%;rotate:-1deg}
+@media(max-width:800px){.sv-ideas{display:none}}
+
+/* Slide 3: the same question with existing, missing, then supplied project context. */
+.sv-before-after{height:100%;min-height:0;display:flex;flex-direction:column;gap:16px}
+.sv-before-after .story-reset-head{flex:none}
+.sv-before-after .story-reset-head h2{font-size:clamp(30px,min(4.2vw,7vh),58px);margin:8px 0 0;line-height:1.05}
+.sv-before-after .story-reset-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(20px,4vw,64px);align-items:center}
+.sv-before-after .decision-story{min-height:0;gap:16px}
+.sv-before-after .earlier-decision{padding:0;border:0}
+.sv-before-after .earlier-decision strong{font-size:clamp(24px,2.8vw,40px)}
+.sv-before-after .earlier-decision p,.sv-before-after .lead{font-size:clamp(15px,1.7vw,24px);line-height:1.35}
+.ba-access{font-size:clamp(12px,1.15vw,17px);line-height:1.5;color:var(--muted);margin:0}
+.sv-before-after .button-row{gap:8px;flex-wrap:wrap}
+.sv-before-after .button{padding:10px 14px;font-size:13px}
+.ba-chats{min-height:0;display:flex;flex-direction:column;gap:10px}
+.ba-chats .chat-example{min-height:0;padding:10px 14px;border-top:2px solid var(--line)}
+.ba-chats .ba-before{border-top-color:#b68d56}
+.ba-chats .ba-after{border-top-color:var(--mint)}
+.ba-chats .chat-example-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:clamp(12px,1.1vw,16px)}
+.ba-chats .chat-example-head img{width:20px;height:20px;flex:none}
+.ba-chats .chat-example-head small{margin-left:auto;color:var(--muted);font-size:clamp(9px,.8vw,12px);font-weight:400}
+.ba-context{font-size:clamp(10px,.85vw,13px);color:var(--muted);margin-bottom:5px}
+.ba-chats .chat-composer{padding:8px 10px;gap:10px;min-height:0}
+.ba-chats .chat-line,.ba-chats .decision-placeholder{font-size:clamp(12px,1.2vw,18px);line-height:1.3;margin:0}
+.ba-chats .demo-answer{padding:8px 0 0;margin:0}
+.ba-chats .context-slip{font-size:clamp(10px,.9vw,14px);padding:6px 10px;margin-bottom:6px;line-height:1.3}
+.ba-chats .context-slip span{font-size:inherit;margin-right:8px}
+.ba-chats .study-caption{font-size:clamp(9px,.8vw,12px);margin:0}
+@media(max-height:720px){.sv-before-after{gap:10px}.ba-chats{gap:7px}.ba-chats .chat-example{padding:7px 10px}.sv-before-after .decision-story{gap:10px}}
+@media(max-width:800px){.sv-before-after .story-reset-body{grid-template-columns:minmax(0,.55fr) minmax(0,1.45fr);gap:16px}.sv-before-after .lead{font-size:15px}.ba-chats .chat-example-head{flex-wrap:wrap;gap:4px}.ba-chats .chat-example-head small{margin-left:0;width:100%}.sv-before-after .button{font-size:11px;padding:8px 10px}.sv-before-after .ba-access{font-size:11px}}
+/* Keep every comparison and its final answer inside the presentation frame. */
+.ba-chats .chat-example-head{justify-content:flex-start;flex-wrap:nowrap}
+.ba-chats .chat-line{padding:0;min-height:0;background:transparent}
+.ba-chats .chat-composer{margin:0;padding:6px 9px}
+.ba-chats [data-demo-send]{min-height:32px;padding:7px 10px;font-size:12px}
+.ba-chats .context-slip span{display:inline;margin:0 8px 0 0}
+@media(max-width:800px){.ba-chats .chat-example-head{flex-wrap:nowrap;gap:6px}.ba-chats .chat-example-head small{width:auto;margin-left:auto;font-size:9px}.ba-chats .chat-example{padding:6px 8px}.ba-chats .demo-answer{padding-top:6px}.sv-before-after .story-reset-body{align-items:center}}
+.ba-chats [data-demo-send]{height:32px;line-height:1}
+.ba-chats [data-demo-send]{margin:0}
+@media(max-width:800px){.ba-chats{gap:4px}}
+
+/* Clear definitions, a visual brief, and labelled connection types. */
+.sv-tool small{letter-spacing:0;text-transform:none;line-height:1.4}
+.sv-tool p{font-size:clamp(14px,1.4vw,20px)}
+.sv-brief{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.sv-brief h3{font-size:clamp(24px,2.7vw,39px);line-height:1.1;letter-spacing:-.04em;margin:12px 0}
+.sv-brief>p{font-size:var(--t);color:var(--muted);margin:0 0 14px}
+.sv-brief ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.sv-brief li{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:clamp(17px,1.9vw,28px);line-height:1.3}
+.sv-brief li>b{display:grid;place-items:center;flex:none;width:1.7em;height:1.7em;border:1px solid var(--mint);border-radius:50%;color:var(--mint);font-size:.65em}
+.sv-brief-target .sv-form label{display:flex;justify-content:space-between;align-items:center}
+.sv-brief-target .sv-form label small{font-size:11px;letter-spacing:0;text-transform:none}
+.sv-code{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sv-code>header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:clamp(13px,1.3vw,18px)}
+.sv-code>header img{width:25px;height:25px}.sv-code>header>span{margin-left:auto;font:11px var(--mono);color:var(--muted)}
+.sv-code-thread{display:flex;flex:1;flex-direction:column;justify-content:center;gap:clamp(10px,1.6vh,18px);padding:clamp(14px,1.8vw,26px);min-height:0}
+.sv-code-prompt{display:flex;gap:12px;align-items:flex-end;padding:14px 16px;background:var(--panel);border-radius:12px;border:1px solid var(--line)}
+.sv-code-prompt p{margin:0;font-size:clamp(14px,1.5vw,21px);line-height:1.45;flex:1}
+.sv-code-send{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;color:var(--bg);background:var(--paper)}
+.sv-code-activity{display:grid;gap:9px}.sv-code-activity p{margin:0;font:clamp(12px,1.15vw,16px)/1.4 var(--mono)}
+.sv-code-thread>em{font-style:normal;font-size:clamp(10px,.9vw,13px);color:var(--muted)}
+.sv-labeled-nodes{grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr) 62px minmax(0,1fr) 62px minmax(0,1fr)}
+.sv-edge{align-self:center;display:grid;gap:12px;justify-items:stretch;padding:0 4px}
+.sv-edge>small{font-size:10px;letter-spacing:0;text-align:center;text-transform:none;line-height:1.25}
+.sv-channel-list{display:flex;flex-wrap:wrap;gap:6px}.sv-channel-list span{font-size:clamp(11px,1.1vw,15px);padding:4px 6px;border-radius:4px;background:var(--panel);line-height:1.3}
+.sv-channel-list .selected{color:var(--mint);border:1px solid var(--mint);background:transparent}
+.sv-protocols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sv-protocols section{border-top:2px solid var(--mint);padding-top:12px}
+.sv-protocols strong{display:block;font-size:clamp(17px,1.8vw,26px);letter-spacing:-.025em}
+.sv-protocols p{margin:7px 0 0;font-size:clamp(12px,1.2vw,17px);line-height:1.4;color:var(--muted)}
+.connection-table{width:100%;border-collapse:collapse;font-size:15px}.connection-table td,.connection-table th{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+@media(max-width:1100px){.sv-tool{align-items:flex-start;gap:10px;padding:12px}.sv-tool img{width:36px;height:36px}.sv-tool h3{font-size:20px}.sv-tool small{font-size:10px}.sv-labeled-nodes{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr) 44px minmax(0,1fr) 44px minmax(0,1fr)}.sv-pipe .sv-foot .text-button{display:none}}
+@media(max-width:800px){.sv-tools .sv-cards{gap:8px}.sv-tool{flex-direction:column;gap:8px}.sv-tool h3{font-size:18px}.sv-tool p{font-size:13px}.sv-tool small{font-size:10px;margin-top:5px}.sv-labeled-nodes{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr)}.sv-nodes section{padding:10px 8px}.sv-edge{padding:0 2px;gap:8px}.sv-edge>small{font-size:8px}.sv-nodes h3{font-size:16px}.sv-nodes svg,.sv-nodes img{width:30px;height:30px}.sv-channel-list span{font-size:9px;padding:3px}.sv-protocols{gap:12px}.sv-protocols strong{font-size:16px}.sv-protocols p{font-size:11px}.sv-brief li{font-size:16px;padding:9px 0;gap:8px}.sv-brief h3{font-size:24px}.sv-code>header>span{display:none}.sv-code-prompt{padding:10px}.sv-code-activity{gap:6px}.sv-code-thread{padding:12px}.sv-brief-target .sv-form h3{font-size:22px}.sv-foot .button-row{gap:8px}}
+
+.sv-tools .sv-cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sv-tools .sv-tool{flex-direction:column;align-items:flex-start;gap:12px}
+.sv-tools .sv-tool img{width:clamp(32px,3.5vw,48px);height:clamp(32px,3.5vw,48px)}
+.sv-tools .sv-tool h3{font-size:clamp(18px,2vw,28px)}
+.sv-cross-tool{grid-template-columns:minmax(0,1fr) 70px minmax(0,1.25fr)}
+.sv-cross-tool .sv-chips{gap:6px}.sv-cross-tool .sv-file{font-size:clamp(11px,1.1vw,15px);padding:7px 9px}
+.sv-cross-tool .sv-file>i{display:none}
+.sv-returned{display:grid;gap:10px}.sv-returned>p{font-size:clamp(14px,1.4vw,20px);margin:0;line-height:1.3}
+@media(max-width:800px){.sv-tools .sv-tool{padding:10px;gap:7px}.sv-tools .sv-tool h3{font-size:16px}.sv-tools .sv-tool p{font-size:12px}.sv-tools .sv-tool small{font-size:9px}.sv-cross-tool{grid-template-columns:minmax(0,1fr) 32px minmax(0,1.2fr)}.sv-cross-tool .sv-rebuild>span{display:none}.sv-cross-tool .sv-rebuild>b{width:26px;height:26px;font-size:18px}.sv-cross-tool .sv-code-prompt p{font-size:13px}.sv-cross-tool .sv-returned>small{font-size:9px}.sv-tools .sv-tray .sv-file{font-size:11px}}
+
+/* Audience deck: no presenter guides, note panel, setup buttons or assistant controls. */
+#resources-toggle,#notes-toggle,#vault-toggle,#agent-toggle,#mode-badge,#notes-dialog,#scene a[href*="preparation.html"],#scene [data-action="show-agent"]{display:none!important}
+
+.portfolio-opening .build-controls{visibility:hidden!important;pointer-events:none}
+
+/* Teach Obsidian at the moment its role becomes visible after the middle Send. */
+.ba-obsidian-intro{padding:clamp(12px,1.4vw,20px);border:1px solid var(--line);border-left:3px solid #7c3aed;background:var(--card);border-radius:8px;animation:obsidian-arrives .45s ease-out both}
+.ba-obsidian-intro>div{display:flex;align-items:center;gap:14px}
+.ba-obsidian-intro img{width:clamp(36px,3.6vw,52px);height:clamp(36px,3.6vw,52px);object-fit:contain}
+.ba-obsidian-intro h3{font-size:clamp(23px,2.4vw,34px);margin:0;letter-spacing:-.04em}
+.ba-obsidian-intro p{font-size:clamp(14px,1.35vw,19px);line-height:1.4;margin:10px 0 0;color:var(--muted)}
+@keyframes obsidian-arrives{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.ba-obsidian-intro{animation:none}}
+
+/* The new silent motion film already contains the note and captions. */
+.sv-has-clip #ct-note,.sv-has-clip #ct-cap{display:none!important}
+.sv-has-clip figure{aspect-ratio:16/9}
+
+/* The supplied note is inspectable without leaving the comparison slide. */
+.ba-chats .context-slip{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ba-chats .signup-file-link{display:inline-flex;align-items:center;gap:5px;flex:none;border:1px solid #c5aa99;background:#f8f5ee;border-radius:3px;padding:5px 8px;color:#a73723;font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.ba-chats .signup-file-link span{margin:0;font:inherit}
+.ba-chats .signup-file-link:hover{background:#e9ded1;border-color:#a73723}
+.ba-chats .signup-file-link:focus-visible{outline:3px solid #2f6fb0;outline-offset:3px}
+#detail-dialog:has(.signup-file-preview){width:min(1100px,94vw);padding:24px}
+#detail-content .signup-file-preview pre{font-size:clamp(15px,1.2vw,19px);line-height:1.4;white-space:pre-wrap;overflow-wrap:anywhere;margin:18px 0 0;padding:20px;max-height:calc(86svh - 125px);overflow:auto;border:1px solid var(--line)}
+@media(max-height:700px){#detail-dialog:has(.signup-file-preview){padding:18px}#detail-content .signup-file-preview pre{font-size:16px;line-height:1.35;padding:14px}}
+
+/* File controls keep the folder illustration while opening the shared preview. */
+.sv-tree button.sv-row,.sv-icons button.sv-icon{color:inherit;background:transparent;border:1px solid transparent;cursor:pointer}
+.sv-tree button.sv-row{text-align:left;width:100%}
+.sv-tree button.sv-row:hover,.sv-icons button.sv-icon:hover{background:#e9e1d6;border-color:#c5aa99}
+.sv-tree button.sv-row:focus-visible,.sv-icons button.sv-icon:focus-visible{outline:3px solid #2f6fb0;outline-offset:3px}

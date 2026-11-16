@@ -1,0 +1,123 @@
+/* Keep a generated artifact inside the keynote frame, however long it is. */
+@media (min-width: 851px) {
+  #app:has(#scene[data-scene="12"]) {
+    height: 100svh;
+    max-height: 100svh;
+  }
+
+  #scene[data-scene="12"] {
+    height: calc(100svh - 132px);
+    min-height: 0;
+    max-height: calc(100svh - 132px);
+    padding-top: clamp(22px, 3.5vh, 36px);
+    padding-bottom: clamp(22px, 3.5vh, 36px);
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    align-content: stretch;
+    justify-content: normal;
+  }
+
+  #scene[data-scene="12"] > .kicker { margin-bottom: 17px; }
+  #scene[data-scene="12"] > .workspace-title {
+    font-size: clamp(44px, 4.3vw, 64px) !important;
+  }
+
+  #scene[data-scene="12"] .workspace {
+    min-height: 0;
+    margin-top: 24px;
+    align-items: stretch;
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+    gap: clamp(24px, 3.5vw, 52px);
+  }
+
+  #scene[data-scene="12"] .workspace > div { min-height: 0; min-width: 0; }
+  #scene[data-scene="12"] .workspace > div:first-child {
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+  }
+  #scene[data-scene="12"] .workspace > div:last-child {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #scene[data-scene="12"] .task-request {
+    margin: 4px 0 18px;
+    font-size: clamp(26px, 2.35vw, 35px);
+  }
+  #scene[data-scene="12"] .context-tags { margin: 16px 0; }
+  #scene[data-scene="12"] .memory-ribbon { margin-top: 18px; }
+  #scene[data-scene="12"] .plan-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    padding: 23px 24px;
+  }
+  #scene[data-scene="12"] .plan-card h3 { font-size: clamp(26px, 2.05vw, 32px); }
+  #scene[data-scene="12"] .plan-step { grid-template-columns: 33px minmax(0, 1fr); gap: 12px; }
+  #scene[data-scene="12"] .plan-step p { font-size: 14px; }
+  #scene[data-scene="12"] .plan-step strong { font-size: 17px; }
+  #scene[data-scene="12"] .artifact-actions { flex: 0 0 auto; margin-top: 11px; }
+  #scene[data-scene="12"] .artifact-actions .button { font-size: 12px; padding: 10px 13px; }
+  #scene[data-scene="12"] .plan-placeholder { flex: 1 1 auto; min-height: 0; padding: 20px 0; }
+
+  .agent-open #scene[data-scene="12"] { padding: 24px 2.8vw; }
+  .agent-open #scene[data-scene="12"] > .workspace-title { font-size: clamp(38px, 3.7vw, 54px) !important; }
+  .agent-open #scene[data-scene="12"] .workspace { gap: 24px; }
+  .agent-open #scene[data-scene="12"] .task-request { font-size: 26px; }
+  .agent-open #scene[data-scene="12"] .plan-card { padding: 21px 20px; }
+}
+
+@media (min-width: 851px) and (max-width: 1180px) {
+  .agent-open #scene[data-scene="12"] { padding: 20px 26px; }
+  .agent-open #scene[data-scene="12"] > .kicker { margin-bottom: 10px; font-size: 10px; }
+  .agent-open #scene[data-scene="12"] > .workspace-title { font-size: 34px !important; }
+  .agent-open #scene[data-scene="12"] .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    margin-top: 16px;
+    gap: 17px;
+  }
+  .agent-open #scene[data-scene="12"] .workspace > div:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 15px;
+    overflow: visible;
+    padding-right: 0;
+  }
+  .agent-open #scene[data-scene="12"] .task-request {
+    grid-column: 1 / -1;
+    font-size: 21px;
+    margin: 0 0 8px;
+  }
+  .agent-open #scene[data-scene="12"] .context-tags { grid-column: 1 / -1; margin: 0 0 6px; }
+  .agent-open #scene[data-scene="12"] .context-tags span { font-size: 10px; }
+  .agent-open #scene[data-scene="12"] .workspace > div:first-child > .small-note { margin: 5px 0; align-self: center; }
+  .agent-open #scene[data-scene="12"] .workspace > div:first-child > .button-row {
+    grid-column: 2;
+    grid-row: 3 / 5;
+    margin: 0;
+    gap: 7px;
+    align-self: center;
+    flex-wrap: nowrap;
+  }
+  .agent-open #scene[data-scene="12"] .workspace > div:first-child > .button-row .button {
+    font-size: 11px;
+    padding: 10px 11px;
+  }
+  .agent-open #scene[data-scene="12"] .memory-ribbon { grid-column: 1; margin: 2px 0 0; font-size: 11px; gap: 8px; }
+  .agent-open #scene[data-scene="12"] .plan-card { padding: 18px 20px; }
+  .agent-open #scene[data-scene="12"] .plan-card h3 { font-size: 26px; }
+  .agent-open #scene[data-scene="12"] .plan-card .kicker { margin-bottom: 10px; }
+  .agent-open #scene[data-scene="12"] .plan-step p { font-size: 14px; }
+}
+
+@media (min-width: 1800px) {
+  #scene[data-scene="12"] {
+    height: calc(100svh - 140px);
+    max-height: calc(100svh - 140px);
+  }
+}
