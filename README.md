@@ -47,6 +47,8 @@ python3 -m http.server 4173 --directory public
 
 Open http://localhost:4173. Use ← / → to navigate, F for full screen, and the visible Motion and Replay controls. Open `/start.html` for the audience kit. With Node.js installed, `npm run check` checks scripts, public links and publication boundaries; no package installation is needed.
 
+For browser layout checks, run `npm install`, `npx playwright install chromium`, then `npm run check:layout`. This checks every slide at eight screen sizes, including 4K, ultrawide and phone layouts, plus revealed answers and full-screen mode. The slide canvas scales its type and illustrations together; phones use a scrollable vertical layout.
+
 ## Deploy
 
 Import this repository into Vercel. Use the **Other** framework preset; output directory is `public` and no build command is required. The included configuration sets this up. Keep credentials outside the repository.

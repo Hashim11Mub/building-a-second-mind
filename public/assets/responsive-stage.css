@@ -1,0 +1,235 @@
+/* Size the slide, type and illustrations together. Container units follow the
+   available stage after the real header/footer, including browser full screen. */
+@property --u { syntax: "<length>"; inherits: true; initial-value: 1px; }
+body:has(#scene) { height: 100dvh; overflow: hidden; }
+body:has(#scene) #app { height: 100dvh; min-height: 0; }
+#layout { flex: 1 1 0; min-height: 0; overflow: hidden; }
+#stage { container-type: size; min-height: 0; align-items: center; justify-content: center; overflow: hidden; }
+#scene#scene[data-scene] {
+  --u: min(.069444444cqw, .130208333cqh);
+  width: min(100cqw, 187.5cqh);
+  height: min(100cqh, 53.333333cqw);
+  min-height: 0;
+  flex: none;
+  padding: calc(24 * var(--u)) calc(60 * var(--u));
+  overflow: hidden;
+  font-size: calc(18 * var(--u));
+}
+#scene *, #scene *::before, #scene *::after { min-width: 0; }
+#scene .simple-deck, #scene .story-reset { gap: calc(24 * var(--u)); }
+#scene .simple-deck.sv, #scene .sv-before-after { height: 100%; }
+#scene .simple-deck.sv { justify-content: center; }
+#scene .sv-stage { flex: 0 1 auto; height: calc(500 * var(--u)); gap: calc(24 * var(--u)); }
+#scene .sv, #scene .sv-host { --t: calc(21 * var(--u)); --s: calc(12 * var(--u)); }
+#scene .kicker, #scene .story-head .kicker, #scene .story-reset-head .kicker { font-size: calc(11 * var(--u)); margin: 0 0 calc(12 * var(--u)); }
+#scene .story-head h2, #scene .story-reset-head h2 { font-size: calc(62 * var(--u)); }
+#scene .story-subtitle { font-size: calc(24 * var(--u)); margin-top: calc(18 * var(--u)); }
+#scene .button { font-size: calc(14 * var(--u)); padding: calc(13 * var(--u)) calc(20 * var(--u)); gap: calc(12 * var(--u)); }
+#scene .text-button { font-size: calc(13 * var(--u)); }
+#scene .button-row { gap: calc(12 * var(--u)); margin-top: calc(24 * var(--u)); }
+#scene .small-note { font-size: calc(14 * var(--u)); }
+#scene .sv small { font-size: var(--s); }
+
+/* The cover and biography keep their composition on wide and tall displays. */
+#scene .keynote-cover { gap: calc(24 * var(--u)); justify-content: center; }
+#scene .keynote-cover h1 { font-size: calc(158 * var(--u)); margin-bottom: calc(24 * var(--u)); }
+#scene .keynote-cover>div>p { font-size: calc(30 * var(--u)); }
+#scene .sv-coverfoot { margin-top: calc(50 * var(--u)); gap: calc(24 * var(--u)); }
+#scene .cover-byline { gap: calc(24 * var(--u)); padding-top: calc(20 * var(--u)); }
+#scene .cover-byline strong { font-size: calc(26 * var(--u)); }
+#scene .cover-byline span { font-size: calc(17 * var(--u)); }
+#scene .sv-rail img { width: calc(46 * var(--u)); height: calc(46 * var(--u)); }
+#scene .sv-rail .sv-link { width: calc(36 * var(--u)); margin-inline: calc(8 * var(--u)); }
+#scene .portfolio-opening { gap: calc(12 * var(--u)) calc(30 * var(--u)); }
+#scene .portfolio-copy { align-content: center; gap: calc(28 * var(--u)); }
+#scene .portfolio-copy .kicker { margin: 0; font-size: calc(12 * var(--u)); }
+#scene .portfolio-copy h2 { font-size: calc(125 * var(--u)); }
+#scene .portfolio-copy .portfolio-lead { font-size: calc(30 * var(--u)); }
+#scene .portfolio-copy .portfolio-role { font-size: calc(22 * var(--u)); }
+#scene .portfolio-education>small { font-size: calc(11 * var(--u)); }
+#scene .portfolio-education p { font-size: calc(30 * var(--u)); margin-top: calc(10 * var(--u)); }
+#scene .portfolio-portrait figcaption { font-size: calc(10 * var(--u)); }
+#scene .build-controls { display: none; }
+
+/* Comparison chat, including answers revealed during the demonstration. */
+#scene .sv-before-after .story-reset-body { gap: calc(48 * var(--u)); }
+#scene .sv-before-after .decision-story { gap: calc(16 * var(--u)); }
+#scene .sv-before-after .earlier-decision strong { font-size: calc(40 * var(--u)); }
+#scene .sv-before-after .earlier-decision p, #scene .sv-before-after .lead { font-size: calc(22 * var(--u)); }
+#scene .ba-access { font-size: calc(16 * var(--u)); }
+#scene .ba-chats { max-width: none; gap: calc(12 * var(--u)); }
+#scene .ba-chats .chat-example { padding: calc(10 * var(--u)) calc(14 * var(--u)); }
+#scene .ba-chats .chat-example-head { font-size: calc(16 * var(--u)); gap: calc(8 * var(--u)); margin-bottom: calc(8 * var(--u)); }
+#scene .ba-chats .chat-example-head img { width: calc(22 * var(--u)); height: calc(22 * var(--u)); }
+#scene .ba-chats .chat-example-head small, #scene .ba-context { font-size: calc(12 * var(--u)); }
+#scene .ba-chats .chat-line { font-size: calc(18 * var(--u)); }
+#scene .ba-chats .chat-composer { padding: calc(8 * var(--u)) calc(10 * var(--u)); }
+#scene .ba-chats [data-demo-send] { height: auto; min-height: calc(32 * var(--u)); min-width: calc(60 * var(--u)); font-size: calc(13 * var(--u)); padding: calc(8 * var(--u)); }
+#scene .ba-chats .context-slip { font-size: calc(14 * var(--u)); padding: calc(8 * var(--u)); }
+#scene .ba-obsidian-intro { padding: calc(16 * var(--u)); }
+#scene .ba-obsidian-intro img { width: calc(44 * var(--u)); height: calc(44 * var(--u)); }
+#scene .ba-obsidian-intro h3 { font-size: calc(30 * var(--u)); }
+#scene .ba-obsidian-intro p { font-size: calc(18 * var(--u)); }
+
+/* Shared windows and file illustrations scale at the same rate as their labels. */
+#scene .sv-win, #scene .sv-code, #scene .sv-doc, #scene .sv-tray { border-radius: calc(10 * var(--u)); }
+#scene .sv-bar, #scene .sv-doc>header { font-size: calc(14 * var(--u)); padding: calc(10 * var(--u)) calc(14 * var(--u)); gap: calc(6 * var(--u)); }
+#scene .sv-bar>i { width: calc(9 * var(--u)); height: calc(9 * var(--u)); }
+#scene .sv-bar img { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+#scene .sv-tree { padding: calc(14 * var(--u)) calc(10 * var(--u)); gap: calc(8 * var(--u)); }
+#scene .sv-row { font-size: calc(16 * var(--u)); padding: calc(8 * var(--u)); }
+#scene .sv-note, #scene .sv-doc>div { padding: calc(26 * var(--u)); gap: calc(14 * var(--u)); }
+#scene .sv-note h3, #scene .sv-doc h3 { font-size: calc(36 * var(--u)); }
+#scene .sv-same { font-size: calc(12 * var(--u)); }
+#scene .sv-same b { font-size: calc(44 * var(--u)); }
+#scene .sv-icon { font-size: calc(15 * var(--u)); gap: calc(10 * var(--u)); }
+#scene .sv-icon>b { width: calc(70 * var(--u)); font-size: calc(15 * var(--u)); }
+#scene .sv-path { padding: calc(14 * var(--u)); gap: calc(5 * var(--u)); }
+#scene .sv-path code { font-size: calc(18 * var(--u)); }
+#scene .sv-path>span { font-size: calc(14 * var(--u)); }
+#scene .sv-chips { gap: calc(12 * var(--u)); }
+#scene .sv-file, #scene .sv-cross-tool .sv-file { font-size: calc(17 * var(--u)); padding: calc(10 * var(--u)); gap: calc(9 * var(--u)); }
+#scene .sv-file>b { font-size: calc(10 * var(--u)); padding: calc(5 * var(--u)); }
+#scene .sv-file>i { font-size: calc(12 * var(--u)); }
+#scene .sv-tools { grid-template-rows: auto auto; align-content: center; height: auto; }
+#scene .sv-cards { gap: calc(24 * var(--u)); }
+#scene .sv-tool { padding: calc(24 * var(--u)); gap: calc(16 * var(--u)); }
+#scene .sv-tools .sv-tool img { width: calc(48 * var(--u)); height: calc(48 * var(--u)); }
+#scene .sv-tools .sv-tool h3 { font-size: calc(28 * var(--u)); }
+#scene .sv-tool p { font-size: calc(20 * var(--u)); }
+#scene .sv-tool small { font-size: calc(12 * var(--u)); }
+#scene .sv-tray { padding: calc(28 * var(--u)); gap: calc(20 * var(--u)); }
+#scene .sv-tray small { font-size: calc(15 * var(--u)); }
+#scene .sv-tray .sv-chips { display: flex; justify-content: space-between; flex-wrap: wrap; }
+#scene .sv-tray .sv-file { font-size: calc(19 * var(--u)); }
+#scene .sv-code>header { font-size: calc(18 * var(--u)); padding: calc(14 * var(--u)); gap: calc(10 * var(--u)); }
+#scene .sv-code>header img { width: calc(25 * var(--u)); height: calc(25 * var(--u)); }
+#scene .sv-code>header>span { font-size: calc(12 * var(--u)); }
+#scene .sv-code-thread { padding: calc(26 * var(--u)); gap: calc(18 * var(--u)); }
+#scene .sv-code-prompt { padding: calc(16 * var(--u)); gap: calc(12 * var(--u)); }
+#scene .sv-code-prompt p, #scene .sv-returned>p { font-size: calc(21 * var(--u)); }
+#scene .sv-code-activity { gap: calc(12 * var(--u)); }
+#scene .sv-code-activity p { font-size: calc(16 * var(--u)); }
+#scene .sv-code-send { width: calc(30 * var(--u)); height: calc(30 * var(--u)); }
+#scene .sv-code-thread>em { font-size: calc(13 * var(--u)); }
+#scene .sv-brief h3 { font-size: calc(38 * var(--u)); }
+#scene .sv-brief li { font-size: calc(27 * var(--u)); padding-block: calc(12 * var(--u)); }
+#scene .sv-form { padding: calc(36 * var(--u)); }
+#scene .sv-form h3 { font-size: calc(38 * var(--u)); }
+#scene .sv-form label, #scene .sv-input, #scene .sv-btn { font-size: calc(20 * var(--u)); }
+#scene .sv-form label { margin-top: calc(24 * var(--u)); }
+#scene .sv-input, #scene .sv-btn { padding: calc(16 * var(--u)); min-height: calc(52 * var(--u)); }
+#scene .sv-ok, #scene .sv-kept { font-size: calc(16 * var(--u)); }
+#scene .sv-cross-tool { grid-template-columns: minmax(0,1fr) calc(70 * var(--u)) minmax(0,1.25fr); }
+#scene .sv-rebuild { font-size: calc(14 * var(--u)); }
+#scene .sv-rebuild>b { font-size: calc(32 * var(--u)); }
+#scene .sv-labeled-nodes { grid-template-columns: minmax(0,1fr) calc(62 * var(--u)) minmax(0,1fr) calc(62 * var(--u)) minmax(0,1fr) calc(62 * var(--u)) minmax(0,1fr); }
+#scene .sv-nodes section { padding: calc(20 * var(--u)); gap: calc(12 * var(--u)); }
+#scene .sv-nodes img, #scene .sv-nodes svg { width: calc(52 * var(--u)); height: calc(52 * var(--u)); }
+#scene .sv-nodes h3 { font-size: calc(27 * var(--u)); }
+#scene .sv-nodes p { display: block; font-size: calc(17 * var(--u)); }
+#scene .sv-edge>small { font-size: calc(10 * var(--u)); overflow-wrap: anywhere; }
+#scene .sv-channel-list span { font-size: calc(14 * var(--u)); padding: calc(5 * var(--u)); }
+#scene .sv-protocols { gap: calc(24 * var(--u)); }
+#scene .sv-protocols strong { font-size: calc(26 * var(--u)); }
+#scene .sv-protocols p { font-size: calc(17 * var(--u)); }
+#scene .sv-stamp { font-size: calc(12 * var(--u)); padding: calc(7 * var(--u)) calc(12 * var(--u)); }
+
+/* OpenClaw uses the stage's real size, rather than subtracting a guessed 132px. */
+#scene:has(.oc-local-slide) { padding: 0; }
+#scene .oc-local-slide { padding: calc(30 * var(--u)) calc(60 * var(--u)); gap: calc(28 * var(--u)); }
+#scene .oc-heading h2 { font-size: calc(58 * var(--u)); max-width: none; }
+#scene .oc-file-layout { gap: calc(30 * var(--u)); }
+#scene .oc-file-list { gap: calc(12 * var(--u)); }
+#scene .oc-file { padding: calc(16 * var(--u)); }
+#scene .oc-file strong { font-size: calc(19 * var(--u)); }
+#scene .oc-file-list .oc-file:last-child strong { font-size: calc(16 * var(--u)); }
+#scene .oc-file span, #scene .oc-file-preview small { font-size: calc(16 * var(--u)); }
+#scene .oc-file-preview { padding: calc(20 * var(--u)); }
+#scene .oc-file-preview h3 { font-size: calc(26 * var(--u)); }
+#scene .oc-file-preview pre { font-size: calc(20 * var(--u)); margin-block: calc(16 * var(--u)); }
+#scene .oc-bottom, #scene .oc-file-footer { font-size: calc(17 * var(--u)); }
+#scene .oc-use-cases { grid-template-columns: repeat(4,minmax(0,1fr)); gap: calc(28 * var(--u)); }
+#scene .oc-use-icon { font-size: calc(42 * var(--u)); }
+#scene .oc-use-cases h3 { font-size: calc(28 * var(--u)); margin-block: calc(18 * var(--u)); }
+#scene .oc-use-cases p { font-size: calc(20 * var(--u)); }
+#scene .closing-copy h2 { font-size: calc(98 * var(--u)); }
+#scene .closing-copy>.lead { font-size: calc(27 * var(--u)); max-width: none; }
+#scene .closing-name { margin-top: calc(35 * var(--u)); padding-top: calc(20 * var(--u)); }
+#scene .closing-name strong { font-size: calc(30 * var(--u)); }
+#scene .closing-name span { font-size: calc(18 * var(--u)); }
+#scene .linkedin-connect { width: calc(360 * var(--u)); }
+#scene .linkedin-qr { width: calc(300 * var(--u)); }
+#scene .linkedin-connect strong { font-size: calc(25 * var(--u)); }
+#scene .linkedin-connect small { font-size: calc(14 * var(--u)); }
+#scene .sv-recap { gap: calc(12 * var(--u)); font-size: calc(14 * var(--u)); }
+#scene .sv-recap span { font-size: calc(14 * var(--u)); padding: calc(7 * var(--u)) calc(12 * var(--u)); }
+#scene .sv-phone header { font-size: calc(18 * var(--u)); padding: calc(14 * var(--u)); gap: calc(10 * var(--u)); }
+#scene .sv-phone header img { width: calc(26 * var(--u)); height: calc(26 * var(--u)); }
+#scene .sv-thread { padding: calc(18 * var(--u)); }
+#scene .sv-rule { font-size: calc(14 * var(--u)); padding: calc(12 * var(--u)); }
+#scene .sv-bubble .chat-line { font-size: calc(20 * var(--u)); }
+#scene .sv-after .demo-answer p { font-size: calc(26 * var(--u)); }
+#scene [data-demo-send] { font-size: calc(14 * var(--u)); min-width: calc(60 * var(--u)); min-height: calc(38 * var(--u)); padding: calc(10 * var(--u)); }
+
+/* Reading on a phone uses a vertical layout and stage scrolling, not clipped
+   miniature desktop columns. Navigation remains outside the scroll area. */
+@media (max-width: 700px) {
+  #stage { container-type: normal; display: block; overflow-y: auto; }
+  #scene#scene[data-scene] { --u: 1px; width: 100%; height: auto; min-height: 100%; padding: 28px 22px; overflow: visible; }
+  #scene .simple-deck, #scene .story-reset, #scene .keynote-cover, #scene .portfolio-opening, #scene .closing-keynote, #scene .oc-local-slide { height: auto; gap: 28px; }
+  #scene .story-head h2, #scene .story-reset-head h2, #scene .oc-heading h2 { font-size: 36px; }
+  #scene .simple-deck.sv, #scene .sv-before-after { height: auto; }
+  #scene .simple-deck, #scene .story-reset { flex-shrink: 0; }
+  #scene .sv-stage { height: auto; flex: none; grid-template-columns: 1fr; gap: 24px; }
+  #scene .sv-win, #scene .sv-code { min-height: 340px; }
+  #scene .sv-folder .sv-same { padding: 4px 0; }
+  #scene .sv-icon:nth-child(2) { display: grid; }
+  #scene .sv-icons { gap: 8px; padding: 8px; }
+  #scene .sv-icon { font-size: 12px; }
+  #scene .sv-phone { min-height: 360px; }
+  #scene .sv-folder .sv-same span br { display: none; }
+  #scene .sv-tools .sv-cards, #scene .oc-use-cases { grid-template-columns: 1fr 1fr; gap: 12px; }
+  #scene .sv-tools .sv-tool { padding: 16px; }
+  #scene .sv-tools .sv-tool h3 { font-size: 23px; }
+  #scene .sv-tool p { font-size: 17px; }
+  #scene .sv-tray .sv-chips { justify-content: flex-start; }
+  #scene .sv-tray .sv-file { font-size: 15px; }
+  #scene .sv-before-after .story-reset-body { flex: none; }
+  #scene .sv-before-after .story-reset-body, #scene .oc-file-layout, #scene .closing-keynote { grid-template-columns: 1fr; }
+  #scene .sv-before-after .button-row { margin-top: 0; }
+  #scene .sv-before-after .earlier-decision { padding: 0; }
+  #scene .sv-before-after .decision-story { gap: 16px; }
+  #scene .ba-chats .chat-example-head { flex-wrap: wrap; }
+  #scene .ba-chats .chat-example-head small { width: 100%; }
+  #scene .ba-chats .chat-line { font-size: 17px; }
+  #scene .keynote-cover h1 { font-size: clamp(45px,11vw,74px); }
+  #scene .keynote-cover>div>p { font-size: 24px; }
+  #scene .sv-coverfoot { flex-direction: column; align-items: flex-start; margin-top: 24px; }
+  #scene .cover-byline { align-items: flex-start; gap: 10px; }
+  #scene .sv-rail { flex-wrap: wrap; }
+  #scene .sv-rail img { width: 32px; height: 32px; }
+  #scene .sv-rail .sv-link { width: 12px; margin-inline: 4px; }
+  #scene .sv-rail .sv-file { font-size: 12px; }
+  #scene .portfolio-opening { display: flex; flex-direction: column; container-type: normal; }
+  #scene .portfolio-copy { gap: 20px; }
+  #scene .portfolio-copy h2 { font-size: clamp(52px,12vw,85px); }
+  #scene .portfolio-copy .portfolio-lead { font-size: 25px; }
+  #scene .portfolio-education p { font-size: 24px; white-space: normal; }
+  #scene .portfolio-portrait { height: 380px; min-height: 380px; flex: none; }
+  #scene .sv-protocols, #scene .sv-labeled-nodes { grid-template-columns: 1fr; }
+  #scene .sv-nodes section { min-height: 180px; }
+  #scene .sv-edge { justify-self: center; min-width: 100px; }
+  #scene .sv-form h3, #scene .sv-brief h3 { font-size: 30px; }
+  #scene .sv-brief li { font-size: 21px; }
+  #scene .sv-form { padding: 22px; }
+  #scene .sv-cross-tool .sv-rebuild { justify-self: center; }
+  #scene .oc-local-slide { padding: 0; }
+  #scene .oc-file-preview pre { font-size: 16px; overflow-wrap: anywhere; }
+  #scene .oc-use-cases h3 { font-size: 23px; }
+  #scene .oc-use-cases p { font-size: 17px; }
+  #scene .closing-copy h2 { font-size: 58px; }
+  #scene .closing-copy>.lead { font-size: 23px; }
+  #scene .linkedin-connect { justify-self: center; max-width: 100%; }
+  #scene .sv-askgrid { grid-template-columns: 1fr; }
+}
